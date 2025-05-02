@@ -26,16 +26,3 @@ A centralized, real-time dashboard platform for managing organizational operatio
 
 ---
 
-## 📦 Project Structure
-
-```bash
-├── dashboard/              # Main Django app
-├── templates/              # Frontend templates (HTML/CSS/JS)
-├── static/                 # Static files (Chart.js, styles, scripts)
-├── chatbot/                # AI Chatbot logic and integrations
-├── db.sqlite3              # Default SQLite3 database (optional)
-├── manage.py
-├── requirements.txt        # Python dependencies
-├── .env                    # Environment variables
-
-```
