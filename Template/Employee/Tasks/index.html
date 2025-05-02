@@ -1,0 +1,87 @@
+{% extends "base2.html" %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Tasks</h4><br>
+            <form method="post">
+                {% csrf_token %}
+                {% load static %}
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status" class="form-select" required>
+                      <option value="Pending">Pending</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-gradient-info btn-rounded shadow-sm me-2">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if Tasks %}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-border">
+                    <thead>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>Created At</th>
+                            <th>Task</th>
+                            <th>Priority</th>
+                            <th>Due Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for Task in Tasks %}
+                        <tr>
+                            <td>{{ forloop.counter}}</td>
+                            <td>{{ Task.created_at}}</td>
+                            <td>{{ Task.task_title}}</td>
+                            <td>{{ Task.priority }}</td>
+                            <td>{{ Task.due_date }}</td>
+                            <td>
+                                <form method="post" action="/employee/task/edit/{{ Task.task_id }}">
+                                    {% csrf_token %}
+                                    <select name="status1" id="status1" class="form-select" onchange="this.form.submit()">
+                                      <option value="Pending">Pending</option>
+                                      <option value="In Progress">In Progress</option>
+                                      <option value="Completed">Completed</option>
+                                    </select>
+                                    <script>
+                                        document.getElementById("status").value = "{{ Task.status }}";
+                                        document.getElementById("status1").value = "{{ Task.status }}";
+                                    </script>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty  %}
+                        <tr>
+                            <td colspan="6" align="center" class="text-danger">No Task Assigned Yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif Searched %}
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="text-danger text-center">No Task Assigned Yet</p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

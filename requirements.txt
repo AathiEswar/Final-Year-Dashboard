@@ -1,0 +1,6 @@
+django
+mysqlclient
+mysql-connector-python
+google-generativeai
+markdown
+python-dotenv

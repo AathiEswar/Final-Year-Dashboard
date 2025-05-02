@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %} - Organization</title>
+  <link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/static/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/static/vendors/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/vendors/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/static/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="shortcut icon" href="/static/images/logo/logo-mini.webp" />
+  <style>
+    th {
+      white-space: nowrap;
+    }
+
+    .browser-nav-buttons {
+      display: flex;
+      margin-right: 15px;
+    }
+
+    .browser-nav-buttons button {
+      background: none;
+      border: none;
+      color: #6c7293;
+      font-size: 20px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .browser-nav-buttons button:hover {
+      color: #ffffff;
+    }
+
+    .browser-nav-buttons button:disabled {
+      color: #41434d;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <a class="brand-logo" href="/" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+          <img src="/static/images/logo/logo-mini.webp" alt="StateDesk Logo"
+            style="width: 60px; height: 60px; object-fit: contain;" />
+          <span style="font-size: 1rem; font-weight: bold; color: #000;">StateDesk</span>
+        </a>
+
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="width: 0;">
+
+
+        <div class="browser-nav-buttons">
+          <button id="browserBackButton" title="Go Back">
+            <i class="mdi mdi-arrow-left"></i>
+          </button>
+          <button id="browserForwardButton" title="Go Forward">
+            <i class="mdi mdi-arrow-right"></i>
+          </button>
+        </div>
+
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item full-screen-link d-none d-lg-block">
+            <a class="nav-link">
+              <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="container-fluid page-body-wrapper">
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <button class="nav-item" type="button" data-toggle="minimize"
+            style="border: 0;background-color: white;height: 30px;">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <li class="nav-item">
+            <a class="nav-link" href="/department-head/dashboard">
+              <span class="menu-title">Dashboard</span>
+              <i class="mdi mdi-home menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/department-head/profile">
+              <span class="menu-title">Profile</span>
+              <i class="mdi mdi-shield-account menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/department-head/project">
+              <span class="menu-title">Project</span>
+              <i class="mdi mdi-view-dashboard menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/department-head/user">
+              <span class="menu-title">User</span>
+              <i class="mdi mdi-account menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/department-head/task">
+              <span class="menu-title">Task</span>
+              <i class="mdi mdi-calendar-check menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/department-head/logout">
+              <span class="menu-title">Logout</span>
+              <i class="mdi mdi-logout menu-icon"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-panel">
+        <div class="content-wrapper">
+          {% block content %}{% endblock %}
+        </div>
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 <a
+                href="https://www.google.com/" target="_blank">StateDesk</a>. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">StateDesk<i
+                class="mdi mdi-heart text-danger"></i></span>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <script src="/static/vendors/js/vendor.bundle.base.js"></script>
+  <script src="/static/vendors/chart.js/chart.umd.js"></script>
+  <script src="/static/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="/static/js/off-canvas.js"></script>
+  <script src="/static/js/misc.js"></script>
+  <script src="/static/js/settings.js"></script>
+  <script src="/static/js/todolist.js"></script>
+  <script src="/static/js/jquery.cookie.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back button functionality
+      const backButton = document.getElementById('browserBackButton');
+      backButton.addEventListener('click', function () {
+        window.history.back();
+      });
+
+      // Forward button functionality
+      const forwardButton = document.getElementById('browserForwardButton');
+      forwardButton.addEventListener('click', function () {
+        window.history.forward();
+      });
+
+      // Reload button functionality
+      const reloadButton = document.getElementById('browserReloadButton');
+      reloadButton.addEventListener('click', function () {
+        window.location.reload();
+      });
+
+      // Check if back/forward is possible and update button states
+      function updateNavigationButtons() {
+        // This is an estimate since we can't directly check if history navigation is possible
+        backButton.disabled = history.length <= 1;
+
+        // We can't reliably determine if forward navigation is possible
+        // So we're not disabling the forward button, but it won't do anything if there's no forward history
+      }
+
+      // Initial update
+      updateNavigationButtons();
+
+      // Listen for popstate events to update buttons when navigating
+      window.addEventListener('popstate', updateNavigationButtons);
+    });
+  </script>
+  {% include "ChatBotProjectManager/index.html" %}
+</body>
+
+</html>

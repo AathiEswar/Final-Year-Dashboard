@@ -1,0 +1,62 @@
+{% extends "base2.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Profile</h4><br>
+      <form method="post">
+        {% csrf_token %}
+        {% load static %}
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="name">Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" name="name" value="{{ User.name }}" autofocus
+                  required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="email">Email</label>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" name="email" value="{{ User.email }}" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="password">Password</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="password" name="password" value="{{ User.password }}"
+                  required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label d-none d-sm-block"></label>
+              <div class="col-sm-9 d-flex align-content-center justify-content-center">
+                <button type="submit" class="btn btn-gradient-info btn-rounded shadow-sm me-2">Save</button>
+                <a href="/employee/dashboard" class="btn btn-light btn-rounded shadow-sm">Back</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Project{% endblock %}
+
+{% block content %}
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Edit Project</h4><br>
+      <form method="post">
+        {% csrf_token %}
+        {% load static %}
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="project_name">Project Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="project_name" name="project_name" value="{{ Project.project_name }}" autofocus required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="department_id">Department ID</label>
+              <div class="col-sm-9">
+                <select id="department_id" name="department_id" class="form-select" required>
+                  {% for Department in Departments %}
+                  <option value="{{ Department.department_id }}">{{ Department.department_name }}</option>
+                  {% endfor %}
+                </select>
+                <script>
+                  document.getElementById('department_id').value = "{{ Project.department_id }}";
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="status">Status</label>
+              <div class="col-sm-9">
+                <select name="status" id="status" class="form-select" required>
+                  <option value="">Select Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <script>
+                  document.getElementById('status').value = "{{ Project.status }}";
+                </script>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="start_date">Start Date</label>
+              <div class="col-sm-9">
+                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ Project.start_date }}" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="end_date">End Date</label>
+              <div class="col-sm-9">
+                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ Project.end_date }}" required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="budget">Budget</label>
+              <div class="col-sm-9">
+                <input type="number" class="form-control" id="budget" name="budget" value="{{ Project.budget }}" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label d-none d-sm-block"></label>
+              <div class="col-sm-9 d-flex align-content-center justify-content-center">
+                <button type="submit" class="btn btn-gradient-info btn-rounded shadow-sm me-2">Save</button>
+                <a href="/project" class="btn btn-light btn-rounded shadow-sm">Back</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

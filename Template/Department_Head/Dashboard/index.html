@@ -1,0 +1,70 @@
+{% extends "base1.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h3 class="page-title">
+    <span class="page-title-icon bg-gradient-primary text-white me-2">
+      <i class="mdi mdi-home"></i>
+    </span> Dashboard
+  </h3>
+</div>
+<div class="row">
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+      <div class="card-body">
+        <img src="/static/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Users <i class="mdi mdi-account mdi-24px float-end"></i>
+        </h4>
+        <h2 class="mb-5">{{ Dashboard.users_count }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+      <div class="card-body">
+        <img src="/static/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Projects <i class="mdi mdi-view-dashboard mdi-24px float-end"></i>
+        </h4>
+        <h2 class="mb-5">{{ Dashboard.projects_count }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Project Status</h4>
+        <canvas id="project-chart" width="100" height="100" style="display: block; box-sizing: border-box;"></canvas>
+
+        <div id="project-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4">
+          <ul>
+            <li>
+              <span style="background-color: rgba(54, 215, 232, 1)"
+                class="rounded rounded-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              Pending {{ Project.pending_percentage }}% ({{ Project.pending_count }})
+            </li>
+            <li>
+              <span style="background-color: rgba(6, 185, 157, 1)"
+                class="rounded rounded-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              In Progress {{ Project.in_progress_percentage }}% ({{ Project.in_progress_count }})
+            </li>
+            <li>
+              <span style="background-color: rgba(254, 112, 150, 1)"
+                class="rounded rounded-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              Completed {{ Project.completed_percentage }}% ({{ Project.completed_count }})
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ Project_Labels|json_script:"Project_Labels" }}
+{{ Project_Data|json_script:"Project_Data" }}
+
+{% endblock %}

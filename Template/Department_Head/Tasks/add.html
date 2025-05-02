@@ -1,0 +1,243 @@
+{% extends "base1.html" %}
+
+{% block title %}Add Task{% endblock %}
+
+
+{% block content %}
+
+<style>
+  #task_description {
+    height: 100px;
+    border-radius: 10px;
+    /* rounded corners */
+    border: 2px solid #ccc;
+    /* subtle border */
+    padding: 15px;
+    /* padding inside the textarea */
+    resize: vertical;
+    /* allow vertical resize */
+  }
+
+  #generate-description {
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    /* rounded button */
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    /* gradient effect */
+    color: white;
+    border: none;
+  }
+
+  #generate-description:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    /* button hover effect */
+    cursor: pointer;
+  }
+
+  #loader {
+    display: none;
+    border: 4px solid #f3f3f3;
+    /* Light grey */
+    border-top: 4px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Add Task</h4><br>
+      <form method="post">
+        {% csrf_token %}
+        {% load static %}
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="task_title">Task Title</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="task_title" name="task_title" autofocus required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="task_description">Task Description</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" id="task_description" name="task_description" required></textarea>
+                <button type="button" id="generate-description"
+                  class="btn btn-gradient-primary btn-rounded shadow-sm mt-2">
+                  Generate Description
+                </button>
+                <div id="loader"></div> <!-- Loader Icon -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="assigned_to">Assigned To</label>
+              <div class="col-sm-9">
+                <select id="assigned_to" name="assigned_to" class="form-select" required>
+                  <option value="">Select Employee</option>
+                  {% for User in Users %}
+                  <option value="{{ User.user_id }}">{{ User.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="project_id">Project</label>
+              <div class="col-sm-9">
+                <select id="project_id" name="project_id" class="form-select" required>
+                  <option value="">Select Project</option>
+                  {% for Project in Projects %}
+                  <option value="{{ Project.project_id }}">{{ Project.project_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="status">Status</label>
+              <div class="col-sm-9">
+                <select name="status" id="status" class="form-select" required>
+                  <option value="">Select Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="priority">Priority</label>
+              <div class="col-sm-9">
+                <select name="priority" id="priority" class="form-select" required>
+                  <option value="">Select Priority</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="due_date">Due Date</label>
+              <div class="col-sm-9">
+                <input type="date" class="form-control" id="due_date" name="due_date" required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label d-none d-sm-block"></label>
+              <div class="col-sm-9 d-flex align-content-center justify-content-center">
+                <button type="submit" class="btn btn-gradient-success btn-rounded shadow-sm me-2">Register</button>
+                <a href="/department-head/task" class="btn btn-light btn-rounded shadow-sm">Back</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script defer>
+  document.getElementById('generate-description').addEventListener('click', async function () {
+    // Get selected IDs
+    const assignedToId = document.getElementById('assigned_to').value;
+    const projectId = document.getElementById('project_id').value;
+    // const departmentId = document.getElementById('department_id').value;
+    const status = document.getElementById('status').value;
+    const priority = document.getElementById('priority').value;
+    const dueDate = document.getElementById('due_date').value;
+
+    // Get label data by matching the selected ID with the corresponding option labels
+    const assignedToLabel = document.querySelector(`#assigned_to option[value="${assignedToId}"]`)?.textContent || '';
+    const projectLabel = document.querySelector(`#project_id option[value="${projectId}"]`)?.textContent || '';
+    // const departmentLabel = document.querySelector(`#department_id option[value="${departmentId}"]`)?.textContent || '';
+    const statusLabel = document.querySelector(`#status option[value="${status}"]`)?.textContent || '';
+    const priorityLabel = document.querySelector(`#priority option[value="${priority}"]`)?.textContent || '';
+
+    // Task title remains the same
+    const taskTitle = document.getElementById('task_title').value;
+
+    const data = {
+      task_title: taskTitle,
+      assigned_to: assignedToLabel,  // Send label data
+      project_id: projectLabel,      // Send label data
+      status: statusLabel,           // Send label data
+      priority: priorityLabel,       // Send label data
+      due_date: dueDate
+    };
+
+    // Show the loader
+    document.getElementById('loader').style.display = 'inline-block';
+    console.log("Data to be sent : " , JSON.stringify(data));
+    
+    try {
+      const response = await fetch('/department-head/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      console.log("result ", result);
+
+      // Hide the loader
+      document.getElementById('loader').style.display = 'none';
+
+      if (result.description) {
+        document.getElementById('task_description').value = result.description;
+      } else {
+        alert('Missing Fields');
+      }
+    } catch (error) {
+      console.error('Error generating description:', error);
+      alert(error);
+
+      // Hide the loader in case of an error
+      document.getElementById('loader').style.display = 'none';
+    }
+  });
+</script>
+
+{% endblock %}

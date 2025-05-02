@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Add Department{% endblock %}
+
+{% block content %}
+<div class="grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Add Departmnet</h4><br>
+            <form method="post">
+                {% csrf_token %}
+                {% load static %}
+                <div class="form-group">
+                    <label for="department_name">Department Name</label>
+                    <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name" autofocus required>
+                </div>
+                <button type="submit" class="btn btn-gradient-success btn-rounded shadow-sm me-2">Register</button>
+                <a href="/department" class="btn btn-light btn-rounded shadow-sm">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

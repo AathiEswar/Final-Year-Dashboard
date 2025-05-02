@@ -1,0 +1,17 @@
+pip install -r requirements.txt
+
+python manage.py runserver
+
+
+
+
+
+----------------------------------------------------
+pip install django --> install diango
+pip install mysqlclient --> install mysqlclient 
+pip install mysql-connector-python --> install mysql
+django-admin startproject project --> create project
+cd project --> move path
+django-admin startapp app --> create app
+python manage.py migrate --> enable session
+python manage.py runserver --> python run

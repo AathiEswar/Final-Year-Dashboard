@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Budget{% endblock %}
+
+{% block content %}
+<div class="grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Edit Budget</h4><br>
+      <form method="post">
+        {% csrf_token %}
+        {% load static %}
+        <div class="form-group">
+          <label for="department_name">Department Name</label>
+          <select id="department_id" name="department_id" class="form-select" autofocus required>
+            <option value="">Select Department</option>
+            {% for Department in Departments %}
+            <option value="{{ Department.department_id }}">{{ Department.department_name }}</option>
+            {% endfor %}
+          </select>
+          <script>
+            document.getElementById('department_id').value = '{{ Budget.department_id }}';
+          </script>
+        </div>
+        <div class="form-group">
+          <label for="allocated_amount">Allocated Amount</label>
+          <input type="number" class="form-control" id="allocated_amount" name="allocated_amount" value="{{ Budget.allocated_amount }}" required>
+        </div>
+        <div class="form-group">
+          <label for="allocated_amount">Spent Amount</label>
+          <input type="number" class="form-control" id="spent_amount" name="spent_amount" value="{{ Budget.spent_amount }}" required>
+        </div>
+        <button type="submit" class="btn btn-gradient-info btn-rounded shadow-sm me-2">Save</button>
+        <a href="/budget" class="btn btn-light btn-rounded shadow-sm">Back</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

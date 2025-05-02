@@ -1,0 +1,50 @@
+{% extends "base1.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-border">
+                    <thead>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>Project Name</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for Project in Projects %}
+                        <tr>
+                            <td>{{ forloop.counter}}</td>
+                            <td>{{ Project.project_name}}</td>
+                            <td>{{ Project.department_name }}</td>
+                            {% if Project.status == "Pending" %}
+                            <td>
+                                <label class="badge badge-gradient-warning">Pending</label>
+                            </td>
+                            {% elif Project.status == "In Progress" %}
+                            <td>
+                                <label class="badge badge-gradient-info">In Progress</label>
+                            </td>
+                            {% elif Project.status == "Completed" %}
+                            <td>
+                                <label class="badge badge-gradient-success">Completed</label>
+                            </td>
+                            {% endif %}
+                            <td>{{ Project.start_date }}</td>
+                            <td>{{ Project.end_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
